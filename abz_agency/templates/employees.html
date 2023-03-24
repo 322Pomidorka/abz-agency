@@ -1,0 +1,344 @@
+<link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.2/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/css/bootstrap.css">
+
+
+<!------ Include the above in your HEAD tag ---------->
+
+{% load static %}
+
+<link rel="stylesheet" href="/static/fancybox/jquery.fancybox.css" type="text/css" media="screen"/>
+<script type="text/javascript" src="/static/fancybox/jquery.fancybox.pack.js"></script>
+<script type="text/javascript" src="/static/fancybox/script.js"></script>
+<link rel="stylesheet" type="text/css" href="/static/fancybox/style.css">
+
+<style>
+
+
+.fancybox {
+    vertical-align: middle;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+}
+
+
+
+*{
+  box-sizing: border-box;
+}
+.d-table{
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+}
+.d-tr{
+  display: table-row;
+}
+.d-td{
+  display: table-cell;
+  text-align: center;
+  border: none;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+}
+.d-td:not(.no-p){
+  padding: 4px;
+}
+
+
+
+.img_wrapper.loaded img{
+    opacity: 1;
+}
+
+    input.example {
+        padding: 8.5px;
+        font-size: 17px;
+        border: 1px solid grey;
+        float: left;
+        width: 100%;
+        background: #f1f1f1;
+    }
+
+  form.example button {
+      float: left;
+      width: 20%;
+      padding: 10px;
+      background: #f43f3f;
+      color: white;
+      font-size: 17px;
+      border: 1px solid grey;
+      border-left: none;
+      cursor: pointer;
+  }
+
+  form.example button:hover {
+      background: #700a0a;
+  }
+
+  form.example::after {
+      content: "";
+      clear: both;
+      display: table;
+  }
+  a.previous {
+      background-color: #FFFFFF;
+      color: black;
+      margin: 10px;
+  }
+
+  a.next {
+      background-color: #FFFFFF;
+      color: black;
+      margin: 10px;
+  }
+
+  a.current {
+      color: black;
+      margin: 10px;
+  }
+
+  a.round {
+      border-radius: 50%;
+      margin: 10px;
+  }
+
+  a.link_post:hover {
+    background-color: #FFFFFF;
+    color: black;
+    margin: 10px;
+  }
+
+  .row {
+    margin-right: 0;
+  }
+
+  .sort-by{
+    cursor:pointer;
+  }
+
+</style>
+
+</head>
+
+
+<body>
+
+<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+    <div class="card card-image" style="border: none;">
+        <div class="rgba-black-strong py-5 px-4">
+            <div class="row d-flex justify-content-center" style="margin-right: 0px">
+                <div class="col-md-10 col-xl-8">
+                    <div class="card mb-4">
+                        <div class="card-header p-0 z-depth-1">
+                            <div class="d-table">
+                                <div class="d-tr">
+                                    <div class="d-td" style="width:60%">
+                                        <i class="fa fa-cloud fa-2x p-3 mr-4 float-left black-text"
+                                           aria-hidden="true"></i>
+                                        <h4 class="text-uppercase white-text mb-0 py-3 mt-1">
+                                            1
+                                            <!--                                            {% if user.is_authenticated %}-->
+                                            <a href="{% url 'show_employees' %}">employee hierarchy</a>
+                                            <!--                                            {% else %}-->
+                                            <!--                                            employee hierarchy-->
+                                            <!--                                            {% endif %}-->
+                                        </h4>
+                                    </div>
+                                    <div class="d-td" style="width:20%">
+                                        2
+
+                                    </div>
+                                    <div class="d-td" style="width:20%">
+                                        3
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="rgba-black-strong py-5 px-4">
+        <input id="searchTxt" placeholder="add your text here..." class="example">
+    </div>
+
+
+    <div class="rgba-black-strong py-5 px-4">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-10 col-xl-8">
+                <div class="card-header p-0 z-depth-1">
+                    <div class="d-table">
+                        <div class="d-tr">
+                            <div class="d-td sort-by" style="width:35%" onclick="search_text('first_name')"><h4>EMPLOYEE NAME</h4>
+                            </div>
+                            <div class="d-td sort-by" style="width:15%" onclick="search_text('employment_position')"><h4>
+                                POSITION</h4></div>
+                            <div class="d-td sort-by" style="width:15%" onclick="search_text('employment_start_date')"><h4>START
+                                DATE</h4></div>
+                            <div class="d-td sort-by" style="width:15%" onclick="search_text('salary')"><h4>SALARY</h4></div>
+                            <div class="d-td sort-by" style="width:10%"><h4>PHOTO</h4></div>
+                            <div class="d-td sort-by" style="width:10%"><h4>DELETE</h4></div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div id="div_sort">
+
+        <div class="rgba-black-strong py-0 px-4">
+            <div class="row d-flex justify-content-center" >
+                <div class="col-md-10 col-xl-8">
+                    <div class="card mb-4">
+                        <div class="card-header p-0 z-depth-1">
+                            <div class="d-table">
+                                <div id="div_sort">
+<!--                                <div >-->
+                                    {% for employee in employees %}
+                                    <div class="d-table">
+                                        <div class="d-tr">
+                                            <div class="d-td" style="width:35%">
+                                                <h4>
+                                                    <a href="#">{{ employee.first_name }} {{ employee.last_name }}</a>
+                                                </h4>
+                                            </div>
+                                            <div class="d-td" style="width:15%">
+                                                <h4>{{ employee.employment_position}}</h4>
+                                            </div>
+                                            <div class="d-td" style="width:15%">
+                                                <h4>{{employee.employment_start_date|date:'Y.M.d' }}</h4>
+                                            </div>
+                                            <div class="d-td" style="width:15%"><h4>{{ employee.salary }}</h4></div>
+                                            <div class="d-td" style="width:10%"><img src={{employee.employment_photo.url}}
+                                                                                     alt="Avatar" class="fancybox"
+                                                                                     rel="{{ employee.name }}"
+                                                                                     href="{{ employee.employment_photo.url }}"
+                                                                                     onload="imgLoaded(this)"/></div>
+                                            <div class="d-td" style="width:10%"><a
+                                                    href="#"><h4>DELETE</h4></a></div>
+                                        </div>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="pagination" style="text-align: center; font-size: 20px">
+            <div class="d-td" style="width:100%">
+                {% with employees.paginator.num_pages as num_pages %}
+
+                {% if employees.has_previous %}
+                <div class="previous"><a href="?page={{ employees.next_page_number }}">Previous &raquo</a></div>
+                {% endif %}
+
+                {% for num in employees.paginator.page_range %}
+                {% if employees.number|add:'-3' == num %}
+                {# First page #}
+                <a href="?page=1">1</a>
+                {% if num != 1 %}
+                <a>&#8943;</a>
+                {% endif %}
+                {% elif num == employees.number %}
+                {# Current page #}
+                <span class="current"><b>{{ num }}</b></span>
+                {% elif employees.number|add:'-3' < num and num < employees.number|add:'3' %}
+                {# Pages around current page #}
+                {{ num }}
+                {% elif employees.number|add:'3' == num %}
+                {# Last page #}
+                {% if num != num_pages %}
+                <a>&#8943;</a>
+                {% endif %}
+                {{ num_pages }}
+                {% endif %}
+                {% endfor %}
+
+                {% if employees.has_next %}
+<!--                <div class="next" onclick="num_up()">Next &raquo</div>-->
+                <div class="next"><a href="?page={{ employees.next_page_number }}">Next &raquo</a></div>
+                {% endif %}
+
+                {% endwith %}
+            </div>
+        </div>
+
+    </div>
+
+
+</div>
+
+
+<script>window.jQuery || document.write('<script src="path/to/your/jquery"><\/script>')</script>
+<script src="https://cdn.rawgit.com/twbs/bootstrap/v4-dev/dist/js/bootstrap.js"></script>
+
+
+<script>
+var page_num = 1;
+var sort_text = 'date_added';
+var search_text_all = '';
+let qsearch = document.getElementById('searchTxt');
+qsearch.onkeyup = keyup;
+
+
+function num_up() {
+    page_num = page_num + 1;
+    sort();
+};
+
+function num_down() {
+    page_num = page_num - 1;
+    sort();
+};
+
+function search_text(i) {
+    if (i === undefined) {
+        sort_text = 'date_added';
+    } else {
+        sort_text = i;
+    }
+    sort();
+};
+
+function keyup(e) {
+    search_text_all = e.target.value;
+    sort();
+};
+
+function sort() {
+    $.ajax(
+    {
+        type:"GET",
+        url:"/employees",
+        data:{
+            sort_by: sort_text,
+            page: page_num,
+            q_search: search_text_all,
+        },
+
+        success : function (data) {
+            $("#div_sort").replaceWith(data);
+        }
+    })
+};
+
+
+</script>
+
+
+</body>
+</html>
